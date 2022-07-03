@@ -1,0 +1,29 @@
+{
+  "name": "bilibili-dl-api",
+  "version": "1.0.0",
+  "description": "Bilibili-DL Worker Controller",
+  "main": "src/index.js",
+  "scripts": {
+    "prepare": "husky install",
+    "lint": "eslint \"src/**/*.js\" --fix",
+    "format": "prettier \"src/**/*.{js,json,md,yml,yaml}\" --write"
+  },
+  "keywords": [
+    "bilibili-dl-controller"
+  ],
+  "author": "Hanif Dwy Putra S <hanifdwyputrasembiring@gmail.com>",
+  "license": "Apache 2.0",
+  "devDependencies": {
+    "@bilibili-dl/config": "^1.0.0",
+    "eslint": "^8.19.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^8.0.1",
+    "prettier": "^2.7.1"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=17.9.1",
+    "pnpm": ">=7.5.0"
+  }
+}
