@@ -2,11 +2,15 @@ lockfileVersion: 5.4
 
 specifiers:
   '@bilibili-dl/config': ^1.0.0
+  dotenv: ^16.0.1
   eslint: ^8.19.0
   eslint-config-google: ^0.14.0
   eslint-config-prettier: ^8.5.0
   husky: ^8.0.1
   prettier: ^2.7.1
+
+dependencies:
+  dotenv: 16.0.1
 
 devDependencies:
   '@bilibili-dl/config': 1.0.0
@@ -163,6 +167,11 @@ packages:
     dependencies:
       esutils: 2.0.3
     dev: true
+
+  /dotenv/16.0.1:
+    resolution: {integrity: sha512-1K6hR6wtk2FviQ4kEiSjFiH5rpzEVi8WW0x96aztHVMhEspNpc4DVOUTEHtEva5VThQ8IaBX1Pe4gSzpVVUsKQ==}
+    engines: {node: '>=12'}
+    dev: false
 
   /escape-string-regexp/4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
