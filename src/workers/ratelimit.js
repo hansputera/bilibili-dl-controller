@@ -49,9 +49,7 @@ export const ratelimitHandler = async (ip) => {
     let familyIP = net.isIP(ip).toString();
 
     if (familyIP === '0') return 'Invalid IP';
-    else if (blacklistedIPs.check(ip)) return 'Blacklisted IP';
-
-    if (familyIP === '4') familyIP = 'ipv4';
+    else if (familyIP === '4') familyIP = 'ipv4';
     else if (familyIP === '6') familyIP = 'ipv6';
 
     if (!ratelimitIPs.has(ip)) ratelimitIPs.set(ip, 1);
