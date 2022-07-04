@@ -27,6 +27,8 @@
     "pnpm": ">=7.5.0"
   },
   "dependencies": {
-    "dotenv": "^16.0.1"
+    "bullmq": "^1.86.4",
+    "dotenv": "^16.0.1",
+    "ioredis": "^5.1.0"
   }
 }
