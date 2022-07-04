@@ -1,5 +1,9 @@
 import got from 'got';
 import {worker} from 'workerpool';
+import net from 'node:net';
+
+import {publicConfig} from '../../public-config.js';
+import {ratelimitIPs} from '../stores/ratelimitIPs.js';
 
 /**
  * Check if the ip is safe.
@@ -36,6 +40,32 @@ export const ipSafe = async (ip) => {
     }
 };
 
+/**
+ * Check if the ip is ratelimited.
+ * @param {string} ip An IP address
+ * @return {Promise<string | undefined>}
+ */
+export const ratelimitHandler = async (ip) => {
+    let familyIP = net.isIP(ip).toString();
+
+    if (familyIP === '0') return 'Invalid IP';
+    else if (blacklistedIPs.check(ip)) return 'Blacklisted IP';
+
+    if (familyIP === '4') familyIP = 'ipv4';
+    else if (familyIP === '6') familyIP = 'ipv6';
+
+    if (!ratelimitIPs.has(ip)) ratelimitIPs.set(ip, 1);
+    else if (ratelimitIPs.get(ip) >= publicConfig.ratelimit.max)
+        return 'Ratelimited';
+
+    if (!(await ipSafe(ip))) {
+        return 'Blacklisted IP';
+    } else {
+        return undefined;
+    }
+};
+
 worker({
     ipSafe,
+    ratelimitHandler,
 });
