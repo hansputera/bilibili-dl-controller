@@ -2,7 +2,10 @@ import 'dotenv/config';
 
 import express from 'express';
 import cors from 'cors';
+import {initProcess} from './init-process.js';
+import {apiRouter} from './routers/api.js';
 
+const processResult = await initProcess();
 const app = express();
 app.use(
     cors({
@@ -10,6 +13,10 @@ app.use(
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
     }),
 );
+app.use(express.json());
+
+app.set('bull_queue', processResult.bullmq_queue);
+app.use('/api', apiRouter);
 
 app.all('*', (_, res) =>
     res.status(404).json({
