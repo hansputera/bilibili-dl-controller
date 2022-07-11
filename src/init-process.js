@@ -1,7 +1,6 @@
 import {initBullMQ} from './bullmq.js';
 import {saveIP} from './background_jobs/save-ip.js';
 import {redis} from './redis.js';
-import {jobCompletedHandler} from './bullmq_handlers/jobCompleted.js';
 import {saveEntriesIP} from './stores/ratelimitIPs.js';
 
 /** @typedef {import('ioredis').Redis} Redis */
@@ -26,10 +25,7 @@ export const initProcess = async () => {
         .on('error', console.error)
         .on('failed', async ({jobId, failedReason}) => {
             console.log(`Job ${jobId} failed with reason: ${failedReason}`);
-        })
-        .on('completed', async ({jobId, returnvalue}) =>
-            jobCompletedHandler(jobId, returnvalue),
-        );
+        });
     console.log('Process initialized.');
 
     return {
