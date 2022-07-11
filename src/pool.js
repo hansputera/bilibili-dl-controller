@@ -13,3 +13,8 @@ export const getWorker = (workername, options) =>
         resolve(getDirname(import.meta), 'workers', workername.concat('.js')),
         options,
     );
+
+export const ratelimitWorker = getWorker('ratelimit', {
+    maxWorkers: 50,
+    workerType: 'thread',
+});
