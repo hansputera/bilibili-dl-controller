@@ -1,6 +1,7 @@
 import express from 'express';
 import {jobCreateController} from '../controllers/createJobController.js';
 import {jobInfoController} from '../controllers/jobInfoController.js';
+import {jobListController} from '../controllers/jobListController.js';
 import {ratelimitMiddleware} from '../middlewares/ratelimiter.js';
 import {redis} from '../redis.js';
 
@@ -17,3 +18,4 @@ apiRouter.get('/redis_info', async (_, res) => {
 });
 apiRouter.get('/jobs/:id', jobInfoController);
 apiRouter.post('/jobs', jobCreateController);
+apiRouter.get('/jobs', jobListController);
