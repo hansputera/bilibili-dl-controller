@@ -25,5 +25,6 @@ app.all('*', (_, res) =>
 );
 
 app.listen(parseInt(process.env.PORT) || 3000, '0.0.0.0', () => {
-    console.log('Server started');
+    console.log('Server starting...');
+    console.log('Web Server running on', parseInt(process.env.PORT) || 3000);
 });
