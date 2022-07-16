@@ -25,6 +25,12 @@ export const initProcess = async () => {
         .on('error', console.error)
         .on('failed', async ({jobId, failedReason}) => {
             console.log(`Job ${jobId} failed with reason: ${failedReason}`);
+        })
+        .on('completed', async ({jobId, returnvalue}) => {
+            console.log('Job', jobId, 'completed');
+
+            const job = await queue.getJob(jobId);
+            await job.update(returnvalue);
         });
     console.log('Process initialized.');
 
