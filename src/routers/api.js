@@ -1,6 +1,6 @@
 import express from 'express';
-import {downloadApiController} from '../controllers/downloadApiController.js';
-import {jobApiController} from '../controllers/jobApiController.js';
+import {jobCreateController} from '../controllers/createJobController.js';
+import {jobInfoController} from '../controllers/jobInfoController.js';
 import {ratelimitMiddleware} from '../middlewares/ratelimiter.js';
 import {redis} from '../redis.js';
 
@@ -15,5 +15,5 @@ apiRouter.get('/redis_info', async (_, res) => {
     const info = await redis.info();
     return res.send(info.replace(/\n/g, '<br>'));
 });
-apiRouter.post('/download', downloadApiController);
-apiRouter.get('/jobs/:id', jobApiController);
+apiRouter.get('/jobs/:id', jobInfoController);
+apiRouter.post('/jobs', jobCreateController);
