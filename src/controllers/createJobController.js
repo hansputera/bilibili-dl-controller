@@ -6,12 +6,12 @@ import {getDownloadValidator} from '../validators/download.validator.js';
 /** @typedef {import('bullmq').Job} Job */
 
 /**
- * Download API controller.
+ * Job creator controller.
  * @param {Request} req - Express request object.
  * @param {Response} res - response object
  * @return {Promise<void>}
  */
-export const downloadApiController = async (req, res) => {
+export const jobCreateController = async (req, res) => {
     try {
         await getDownloadValidator().validateAsync(req.body);
 
