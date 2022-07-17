@@ -18,7 +18,9 @@ export const initBullMQ = async (redisConn) => {
             connection: redisConn,
             defaultJobOptions: {
                 attempts: 3,
-                removeOnFail: true,
+                removeOnFail: {
+                    age: 60, // 1 minute
+                },
                 removeOnComplete: {
                     age: 60 * 5, // 5 minutes
                 },
