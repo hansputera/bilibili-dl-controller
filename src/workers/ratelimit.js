@@ -24,7 +24,6 @@ export const ipSafe = async (ip) => {
         .json()
         .catch(() => undefined);
 
-    console.log(data);
     if (!data) return false;
     else {
         const dataIP = data.data;
