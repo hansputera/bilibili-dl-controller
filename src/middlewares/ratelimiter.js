@@ -28,7 +28,7 @@ export const ratelimitMiddleware = async (req, res, next) => {
     }
 
     const blacklistedIPs = await redis
-        .get('ratelimit_ips')
+        .get('blacklisted_ips')
         .then((ips) => (typeof ips === 'string' ? JSON.parse(ips) : []))
         .catch(() => []);
 
@@ -49,7 +49,7 @@ export const ratelimitMiddleware = async (req, res, next) => {
             message: 'You are blacklisted.',
         });
     } else {
-        if (result) return res.status(401).json({message: result});
+        if (result) return res.status(429).json({message: result});
         return next();
     }
 };
