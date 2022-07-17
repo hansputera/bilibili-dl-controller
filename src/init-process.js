@@ -36,5 +36,6 @@ export const initProcess = async () => {
 
     return {
         bullmq_queue: queue,
+        bullmq_events: queueEvents,
     };
 };

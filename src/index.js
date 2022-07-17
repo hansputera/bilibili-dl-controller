@@ -17,6 +17,7 @@ app.use(
 app.use(express.json());
 
 app.set('bull_queue', processResult.bullmq_queue);
+app.set('bull_events', processResult.bullmq_events);
 app.use('/api', apiRouter);
 
 app.all('*', (_, res) =>
