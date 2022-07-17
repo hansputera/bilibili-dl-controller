@@ -15,7 +15,7 @@ import {redis} from '../redis.js';
 export const ratelimitMiddleware = async (req, res, next) => {
     let ip = req.ip;
     if (typeof req.headers['x-payload'] === 'string') {
-        ip = Buffe.from(req.headers['x-payload']).toString('utf8');
+        ip = Buffer.from(req.headers['x-payload']).toString('utf8');
     }
 
     if (
