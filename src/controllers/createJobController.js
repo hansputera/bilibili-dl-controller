@@ -11,12 +11,17 @@
  */
 export const jobCreateController = async (req, res) => {
     try {
-        /** @type {Job} */
-        const job = await req.app.settings['bull_queue'].add('downloader', {
-            audioUrl: req.body.audioUrl,
-            videoUrl: req.body.videoUrl,
-            identifier: req.body.identifier,
+        if (typeof req.body !== 'object') return res.status(400).json({
+            message: 'I need an object!',
         });
+        else if (typeof req.body?.job !== 'string') return res.status(400).json({
+            message: 'The request payload is an object, but, can you fill the "job" ?',
+        });
+        else if (typeof req.body?.payload === 'undefined') return res.status(400).json({
+            message: 'Sorry, can you fill the "payload" ?',
+        });
+        /** @type {Job} */
+        const job = await req.app.settings['bull_queue'].add(req.body.job, req.body.payload);
 
         if (req.query.wait) {
             const result = await job
