@@ -40,6 +40,7 @@ export const ratelimitMiddleware = async (req, res, next) => {
 
     const result = await ratelimitWorker.exec('ratelimitHandler', [ip]);
     if (/blacklisted/gi.test(result)) {
+        console.log(ip, 'is blacklisted');
         await redis.set(
             'blacklisted_ips',
             JSON.stringify([...blacklistedIPs, ip]),
