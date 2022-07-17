@@ -7,6 +7,7 @@ import {apiRouter} from './routers/api.js';
 
 const processResult = await initProcess();
 const app = express();
+app.set('trust proxy', true);
 app.use(
     cors({
         origin: '*',
