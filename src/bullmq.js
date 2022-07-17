@@ -1,4 +1,5 @@
 import {Queue, QueueScheduler, QueueEvents} from 'bullmq';
+import {randomBytes} from 'node:crypto';
 
 /** @typedef {import('ioredis').Redis} Redis */
 
@@ -8,6 +9,7 @@ import {Queue, QueueScheduler, QueueEvents} from 'bullmq';
  * @return {Promise<{q: Queue, e: QueueEvents}>}
  */
 export const initBullMQ = async (redisConn) => {
+    redisConn.set('api_credential_key', randomBytes(5).toString('hex'));
     new QueueScheduler('stream', {
         connection: redisConn,
         maxStalledCount: 10,
