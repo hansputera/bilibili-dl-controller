@@ -1,5 +1,3 @@
-import {getDownloadValidator} from '../validators/download.validator.js';
-
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 
@@ -13,8 +11,6 @@ import {getDownloadValidator} from '../validators/download.validator.js';
  */
 export const jobCreateController = async (req, res) => {
     try {
-        await getDownloadValidator().validateAsync(req.body);
-
         /** @type {Job} */
         const job = await req.app.settings['bull_queue'].add('downloader', {
             audioUrl: req.body.audioUrl,
@@ -22,15 +18,27 @@ export const jobCreateController = async (req, res) => {
             identifier: req.body.identifier,
         });
 
+        if (req.query.wait) {
+            const result = await job
+                .waitUntilFinished(req.app.settings['bull_events'], 10_000)
+                .catch((e) => e);
+
+            return res.status(200).json({
+                identifier: req.body.identifier,
+                jobId: job.id,
+                q: job.queueName,
+                data: result,
+            });
+        }
+
         return res.status(200).json({
             identifier: req.body.identifier,
             jobId: job.id,
             q: job.queueName,
         });
     } catch (e) {
-        return res.status(e.name === 'ValidationError' ? 400 : 500).json({
+        return res.status(500).json({
             error: e.message,
-            details: e.details,
         });
     }
 };
