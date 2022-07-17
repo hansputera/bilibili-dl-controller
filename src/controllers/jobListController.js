@@ -19,7 +19,11 @@ export const jobListController = async (req, res) => {
                 ? j.failedReason
                     ? 'failed'
                     : 'finished'
+                : j.failedReason
+                ? 'failed'
                 : 'progress',
+            failedReason: j.failedReason,
+            bullMQId: j.id,
         })),
     );
 };
