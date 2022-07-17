@@ -2,6 +2,7 @@ import express from 'express';
 import {jobCreateController} from '../controllers/createJobController.js';
 import {jobInfoController} from '../controllers/jobInfoController.js';
 import {jobListController} from '../controllers/jobListController.js';
+import {keyAuthMiddleware} from '../middlewares/keyAuth.js';
 import {ratelimitMiddleware} from '../middlewares/ratelimiter.js';
 import {redis} from '../redis.js';
 
@@ -11,6 +12,7 @@ export const apiRouter = express.Router({
 });
 
 apiRouter.use(ratelimitMiddleware);
+apiRouter.use(keyAuthMiddleware);
 apiRouter.get('/', (_, res) => res.sendStatus(200));
 apiRouter.get('/redis_info', async (_, res) => {
     const info = await redis.info();
